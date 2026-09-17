@@ -1,6 +1,6 @@
 from kedro.pipeline import Node, Pipeline
 
-from .nodes import add_split_column, clean_data, fit_imputer, transform_imputer
+from .nodes import add_split_column, clean_data, fit_imputer, transform_imputer, cap_outliers, fit_outlier_thresholds
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -29,6 +29,18 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs=["split_diabetes_data", "imputer"],
                 outputs="imputed_diabetes_data",
                 name="transform_imputer",
+            ),
+            Node(
+                  func=fit_outlier_thresholds,
+                  inputs=["imputed_diabetes_data", "params:columns", "params:split_to_fit", "params:outliers"],
+                  outputs="outlier_thresholds",
+                  name="fit_outlier_thresholds",
+            ),
+            Node(
+                func=cap_outliers,
+                inputs=["imputed_diabetes_data", "outlier_thresholds"],
+                outputs="capped_diabetes_data",
+                name="cap_outliers",
             ),
         ]
     )

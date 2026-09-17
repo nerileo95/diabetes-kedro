@@ -8,3 +8,7 @@ split_to_fit: [train]
 
 imputer:
     n_neighbors: 5
+
+outliers:
+  q1: 0.05
+  q3: 0.95

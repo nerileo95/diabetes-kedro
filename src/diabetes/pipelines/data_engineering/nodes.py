@@ -51,3 +51,23 @@ def transform_imputer(df: pd.DataFrame, imputer: dict[str, Any]) -> pd.DataFrame
     filled = imputer["imputer"].transform(scaled)
     df_out[cols] = imputer["scaler"].inverse_transform(filled)
     return df_out
+
+def fit_outlier_thresholds(
+      df: pd.DataFrame, columns: dict[str, Any], split_to_fit: list[str], params: dict[str, Any]
+  ) -> dict[str, list[float]]:
+      """Limites de outlier (quantis 5%/95% + 1.5 IQR) calculados só no treino."""
+      train = df.loc[df["split"].isin(split_to_fit)]
+      thresholds = {}
+      for col in columns["numerical"]:
+          q1 = train[col].quantile(params["q1"])
+          q3 = train[col].quantile(params["q3"])
+          iqr = q3 - q1
+          thresholds[col] = [float(q1 - 1.5 * iqr), float(q3 + 1.5 * iqr)]
+      return thresholds
+
+
+def cap_outliers(df: pd.DataFrame, thresholds: dict[str, list[float]]) -> pd.DataFrame:
+    df_out = df.copy()
+    for col, (low, up) in thresholds.items():
+        df_out[col] = df_out[col].clip(low, up)
+    return df_out
