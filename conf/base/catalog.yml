@@ -45,3 +45,19 @@ scalers:
 master_table:
   type: pandas.CSVDataset
   filepath: data/05_model_input/master_table.csv
+
+baseline_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/baseline_model.pkl
+
+baseline_metrics:
+  type: json.JSONDataset
+  filepath: data/08_reporting/baseline_metrics.json
+
+optimized_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/optimized_model.pkl
+
+optimized_metrics:
+  type: json.JSONDataset
+  filepath: data/08_reporting/optimized_metrics.json

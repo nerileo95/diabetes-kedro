@@ -1,0 +1,19 @@
+modelling_baseline:
+    class_path: sklearn.linear_model.LogisticRegression
+    init_args:
+      max_iter: 1000
+    train_splits: [train]
+    eval_splits: [train, test, validate]
+
+modelling_optimization:
+  class_path: sklearn.ensemble.RandomForestClassifier
+  init_args:
+    random_state: 46
+  train_splits: [train]
+  eval_splits: [train, test, validate]
+  cv: 5
+  scoring: roc_auc
+  param_grid:
+    n_estimators: [100, 200, 300]
+    max_depth: [null, 5, 10]
+    min_samples_split: [2, 5, 10]
