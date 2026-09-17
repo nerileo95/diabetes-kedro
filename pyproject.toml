@@ -15,6 +15,8 @@ dependencies = [
     "kedro-viz>=12.4.0",
     "kedro-datasets[json-jsondataset,pandas-csvdataset,pickle-pickledataset]>=9.6.0",
     "scikit-learn>=1.7.2",
+    "fastapi>=0.141.1",
+    "uvicorn[standard]>=0.53.0",
 ]
 
 [project.scripts]

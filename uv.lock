@@ -818,6 +818,7 @@ wheels = [
 name = "diabetes"
 source = { editable = "." }
 dependencies = [
+    { name = "fastapi" },
     { name = "ipython" },
     { name = "jupyterlab" },
     { name = "kedro" },
@@ -826,6 +827,7 @@ dependencies = [
     { name = "notebook" },
     { name = "scikit-learn", version = "1.7.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "scikit-learn", version = "1.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "uvicorn", extra = ["standard"] },
 ]
 
 [package.optional-dependencies]
@@ -850,6 +852,7 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "docutils", marker = "extra == 'docs'", specifier = "<0.21" },
+    { name = "fastapi", specifier = ">=0.141.1" },
     { name = "ipykernel", marker = "extra == 'docs'", specifier = ">=5.3,<7.0" },
     { name = "ipython", specifier = ">=8.10" },
     { name = "jinja2", marker = "extra == 'docs'", specifier = "<3.2.0" },
@@ -869,6 +872,7 @@ requires-dist = [
     { name = "sphinx-autodoc-typehints", marker = "extra == 'docs'", specifier = "==1.20.2" },
     { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = "==0.5.2" },
     { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = "==2.0.0" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.53.0" },
 ]
 provides-extras = ["docs", "dev"]
 
