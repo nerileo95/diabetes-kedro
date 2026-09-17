@@ -163,3 +163,6 @@ venv.bak/
 
 # mlflow local runs
 mlruns/*
+
+# entregar os datasets brutos
+!data/01_raw/*.csv
