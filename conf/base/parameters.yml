@@ -1,0 +1,4 @@
+columns:
+    target: Outcome
+    numerical: [Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]
+    zero_as_missing: [Glucose, BloodPressure, SkinThickness, Insulin, BMI]
