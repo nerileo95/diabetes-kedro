@@ -61,3 +61,15 @@ optimized_model:
 optimized_metrics:
   type: json.JSONDataset
   filepath: data/08_reporting/optimized_metrics.json
+
+raw_inference_data:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/diabetes-dataset-inference.csv
+
+scaled_inference_data:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/scaled_inference.csv
+
+inference_predictions:
+  type: json.JSONDataset
+  filepath: data/07_model_output/inference_predictions.json
