@@ -25,3 +25,7 @@ outlier_thresholds:
 capped_diabetes_data:
   type: pandas.CSVDataset
   filepath: data/03_primary/capped_diabetes.csv
+
+featured_diabetes_data:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/featured_diabetes.csv

@@ -71,3 +71,33 @@ def cap_outliers(df: pd.DataFrame, thresholds: dict[str, list[float]]) -> pd.Dat
     for col, (low, up) in thresholds.items():
         df_out[col] = df_out[col].clip(low, up)
     return df_out
+
+def create_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Features do notebook. Não aprende nada dos dados, então não precisa de fit."""
+    df = df.copy()
+    age, bmi, glucose = df["Age"], df["BMI"], df["Glucose"]
+
+    df["NEW_AGE_CAT"] = np.where(age >= 50, "senior", "mature")
+    df["NEW_BMI"] = pd.cut(
+        bmi, bins=[0, 18.5, 24.9, 29.9, 100], labels=["Underweight", "Healthy", "Overweight", "Obese"]
+    ).astype(str)
+    df["NEW_GLUCOSE"] = pd.cut(
+        glucose, bins=[0, 140, 200, 300], labels=["Normal", "Prediabetes", "Diabetes"]
+    ).astype(str)
+
+    bmi_group = pd.cut(
+        bmi, bins=[0, 18.5, 25, 30, 100], right=False,
+        labels=["underweight", "healthy", "overweight", "obese"],
+    ).astype(str)
+    df["NEW_AGE_BMI_NOM"] = bmi_group + df["NEW_AGE_CAT"]
+
+    glucose_group = pd.cut(
+        glucose, bins=[0, 70, 100, 126, 1000], right=False,
+        labels=["low", "normal", "hidden", "high"],
+    ).astype(str)
+    df["NEW_AGE_GLUCOSE_NOM"] = glucose_group + df["NEW_AGE_CAT"]
+
+    df["NEW_INSULIN_SCORE"] = np.where(df["Insulin"].between(16, 166), "Normal", "Abnormal")
+    df["NEW_GLUCOSE_X_INSULIN"] = glucose * df["Insulin"]
+    df["NEW_GLUCOSE_X_PREGNANCIES"] = glucose * df["Pregnancies"]
+    return df
