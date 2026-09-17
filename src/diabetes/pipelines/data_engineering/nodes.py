@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.impute import KNNImputer
-from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import OneHotEncoder, RobustScaler
 
 logger = logging.getLogger(__name__)
 
@@ -101,3 +101,31 @@ def create_features(df: pd.DataFrame) -> pd.DataFrame:
     df["NEW_GLUCOSE_X_INSULIN"] = glucose * df["Insulin"]
     df["NEW_GLUCOSE_X_PREGNANCIES"] = glucose * df["Pregnancies"]
     return df
+
+def fit_encoders(
+      df: pd.DataFrame, columns: dict[str, Any], split_to_fit: list[str]
+  ) -> OneHotEncoder:
+      cols = columns["engineered_categorical"]
+      train = df.loc[df["split"].isin(split_to_fit), cols].astype(str)
+      encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+      return encoder.set_output(transform="pandas").fit(train)
+
+
+def transform_encoders(df: pd.DataFrame, encoder: OneHotEncoder) -> pd.DataFrame:
+    cols = list(encoder.feature_names_in_)
+    encoded = encoder.transform(df[cols].astype(str))
+    return pd.concat([df.drop(columns=cols), encoded.set_index(df.index)], axis=1)
+
+def fit_scalers(
+      df: pd.DataFrame, columns: dict[str, Any], split_to_fit: list[str]
+  ) -> RobustScaler:
+      cols = columns["numerical"] + columns["engineered_numerical"]
+      train = df.loc[df["split"].isin(split_to_fit), cols]
+      return RobustScaler().set_output(transform="pandas").fit(train)
+
+
+def transform_scalers(df: pd.DataFrame, scaler: RobustScaler) -> pd.DataFrame:
+    df_out = df.copy()
+    cols = list(scaler.feature_names_in_)
+    df_out[cols] = scaler.transform(df_out[cols])
+    return df_out

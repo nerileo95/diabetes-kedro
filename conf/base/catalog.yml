@@ -29,3 +29,19 @@ capped_diabetes_data:
 featured_diabetes_data:
   type: pandas.CSVDataset
   filepath: data/04_feature/featured_diabetes.csv
+
+encoders:
+  type: pickle.PickleDataset
+  filepath: data/06_models/encoders.pkl
+
+encoded_diabetes_data:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/encoded_diabetes.csv
+
+scalers:
+  type: pickle.PickleDataset
+  filepath: data/06_models/scalers.pkl
+
+master_table:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/master_table.csv
