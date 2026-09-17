@@ -1,5 +1,10 @@
-# This is a boilerplate parameters config generated for pipeline 'data_engineering'
-# using Kedro 1.6.0.
-#
-# Documentation for this file format can be found in "Parameters"
-# Link: https://docs.kedro.org/en/1.6.0/configuration/parameters.html
+split:
+    train: 0.7
+    test: 0.15
+    validate: 0.15
+    random_state: 42
+
+split_to_fit: [train]
+
+imputer:
+    n_neighbors: 5

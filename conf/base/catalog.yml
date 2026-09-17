@@ -2,7 +2,18 @@ raw_diabetes_data:
     type: pandas.CSVDataset
     filepath: data/01_raw/diabetes-dataset-modelling.csv
 
-
 cleaned_diabetes_data:
     type: pandas.CSVDataset
     filepath: data/02_intermediate/cleaned_diabetes.csv
+
+split_diabetes_data:
+    type: pandas.CSVDataset
+    filepath: data/03_primary/split_diabetes.csv
+
+imputer:
+  type: pickle.PickleDataset
+  filepath: data/06_models/imputer.pkl
+
+imputed_diabetes_data:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/imputed_diabetes.csv
