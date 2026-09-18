@@ -1,0 +1,8 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./conf:/app/conf:ro
+      - ./data:/app/data
