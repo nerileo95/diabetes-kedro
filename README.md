@@ -36,3 +36,9 @@ O container usa a porta **8001** no host para não conflitar com o uvicorn local
 | RandomForest otimizado | 0.987 | 0.725 | 0.880 |
 
 O RandomForest mostra overfitting (0.987 no train contra 0.725 no test), por isso o baseline é o modelo preferido.
+
+## Considerações sobre o notebook que deu origem a esse pipeline
+Lá foram constatados alguns pontos que foram melhorados aqui:
+- Vazamento de dados nos tratamentos e feature engineering: o processo tratava os dados e depois fazia split de treino e teste, o que pode funcionar para alguns tratamentos, mas não funciona quando há imputação KNN, clip de outliers etc.
+- Correção da criação da variável "NEW_AGE_BMI_NOM", que tinha um overlap na construção das labels
+- As correções de vazamento já ocasionaram a mudança do resultado, com resultado do baseline empatado com o random forest tunado
